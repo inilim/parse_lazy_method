@@ -18,7 +18,8 @@
     "prefer-stable": true,
     "require": {
       "php": "^8.2",
-        "nikic/php-parser": "^5.0"
+        "nikic/php-parser": "^5.0",
+        "inilim/dump": "dev-main"
     },
     "require-dev": {
         "phpstan/phpstan": "@stable"

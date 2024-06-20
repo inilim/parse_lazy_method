@@ -13,9 +13,9 @@ use PhpParser\Node\Identifier;
 
 class TypeAsString
 {
-    public function __invoke(?NodeAbstract $node): string
+    public function __invoke(?NodeAbstract $node): ?string
     {
-        if ($node === null) return '';
+        if ($node === null) return null;
 
         if ($this->isPrimitive($node)) {
             return $this->getNamePrimitive($node);
