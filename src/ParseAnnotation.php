@@ -23,19 +23,19 @@ class ParseAnnotation
         // ------------------------------------------------------------------
 
         $t = \explode(\PHP_EOL, $t);
-        $t = \_arr()->map($t, static function (string $item) {
+        $t = \array_map(static function (string $item) {
             $item = \_str()->trim($item);
             $item = \_str()->ltrim($item, '*');
             $item = \_str()->trim($item);
 
             return $item;
-        });
+        }, $t);
 
         // ------------------------------------------------------------------
         // 
         // ------------------------------------------------------------------
 
-        $t = \_arr()->where($t, static fn (string $item) => \str_starts_with($item, '@'));
+        $t = \array_filter($t, static fn (string $item) => \str_starts_with($item, '@'));
         $t = \array_values($t);
 
         // ------------------------------------------------------------------

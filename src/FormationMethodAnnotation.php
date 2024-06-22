@@ -41,7 +41,7 @@ class FormationMethodAnnotation
             return '';
         }
 
-        $ann_params = \_arr()->where($this->result->annotations_method, static fn ($item) => $item['name'] === 'param');
+        $ann_params = \array_filter($this->result->annotations_method, static fn ($item) => $item['name'] === 'param');
         $ann_params = \array_column($ann_params, 'value');
         /** @var string[] $ann_params */
 
