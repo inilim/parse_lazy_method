@@ -8,21 +8,52 @@ class ParseAnnotation
 {
     public function __invoke(Doc $comment): array
     {
-        \preg_match_all('#\@([a-z\_]+)[\s\t]+(.+)\n#i', $comment->getText(), $matches);
+        $t = \_str()->trim($comment->getText());
 
-        $names = $matches[1] ?? [];
-        $values = $matches[2] ?? [];
-        unset($matches);
+        // убираем '/**'
+        $t = \_str()->replaceFirst('/**', '', $t);
+        $t = \_str()->trim($t);
+
+        // убираем '*/'
+        $t = \_str()->replaceLast('*/', '', $t);
+        $t = \_str()->trim($t);
+
+        // ------------------------------------------------------------------
+        // 
+        // ------------------------------------------------------------------
+
+        $t = \explode(\PHP_EOL, $t);
+        $t = \_arr()->map($t, static function (string $item) {
+            $item = \_str()->trim($item);
+            $item = \_str()->ltrim($item, '*');
+            $item = \_str()->trim($item);
+
+            return $item;
+        });
+
+        // ------------------------------------------------------------------
+        // 
+        // ------------------------------------------------------------------
+
+        $t = \_arr()->where($t, static fn (string $item) => \str_starts_with($item, '@'));
+        $t = \array_values($t);
+
+        // ------------------------------------------------------------------
+        // 
+        // ------------------------------------------------------------------
+
+        if (!$t) return [];
 
         $res = [];
-        foreach ($names as $idx => $name) {
+        foreach ($t as $item) {
+            $item = \_str()->squish($item);
+            $item = \explode(' ', $item, 2);
+
             $res[] = [
-                'name' => \trim($name),
-                'value' => \trim($values[$idx]),
+                'name'  => \_str()->replaceFirst('@', '', $item[0]),
+                'value' => $item[1] ?? '',
             ];
         }
-        unset($names, $values);
-
         return $res;
     }
 }

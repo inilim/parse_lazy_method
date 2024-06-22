@@ -14,20 +14,18 @@ use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Class_;
 
-class ParseClass
+class ParseClassAndMethod
 {
     protected ?ParseComment $parse_comment = null;
     protected ?ParseAnnotation $parse_annotation = null;
 
-    public function __invoke(Class_ $class, string $name_method): ?ResultParseClass
+    public function __invoke(Class_ $class, string $name_method): ResultParseClass
     {
         // ------------------------------------------------------------------
         // парсим комментарии класса
         // ------------------------------------------------------------------
 
-
-
-        $comments = $class->getComments();
+        $comments       = $class->getComments();
 
         $comments_class = $this->parseComments($comments);
 
@@ -54,14 +52,18 @@ class ParseClass
         }
         unset($methods);
 
-        if ($method === null) return null;
+        if ($method === null) {
+            throw new \Exception(
+                \sprintf('Method no found: %s', $name_method)
+            );
+        }
         /** @var ClassMethod $method */
 
         // ------------------------------------------------------------------
         // парсим комментарии метода
         // ------------------------------------------------------------------
 
-        $comments = $method->getComments();
+        $comments        = $method->getComments();
         $comments_method = $this->parseComments($comments);
 
         // ------------------------------------------------------------------
@@ -74,8 +76,8 @@ class ParseClass
         // 
         // ------------------------------------------------------------------
 
-        $type_to_str = new TypeAsString;
-        $param_to_str = new ParamAsString;
+        $type_to_str    = new TypeAsString;
+        $param_to_str   = new ParamAsString;
         $default_to_str = new DefaultValueAsString;
 
         // ------------------------------------------------------------------
