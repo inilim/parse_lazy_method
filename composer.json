@@ -7,7 +7,9 @@
       "psr-4": {
         "Inilim\\ParseLazyMethod\\": "src/"
       },
-      "files": []
+      "files": [
+        "func.php"
+      ]
     },
     "authors": [
       {
