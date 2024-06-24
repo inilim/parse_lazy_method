@@ -57,7 +57,7 @@ class DefaultValueAsString
         // строка
         // ------------------------------------------------------------------
         elseif ($default_node instanceof String_) {
-            return '\'' . $default_node->value . '\'';
+            return $default_node->getAttribute('rawValue');
         }
         // ------------------------------------------------------------------
         // константы классов
