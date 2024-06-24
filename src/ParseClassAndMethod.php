@@ -113,6 +113,7 @@ class ParseClassAndMethod
 
         return new ResultParseClass(
             method: \lcfirst($class->name->name),
+            method_original: $class->name->name,
             return_type: $return_type,
             args: $args,
             annotations_class: $annotations_class,
