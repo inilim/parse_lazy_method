@@ -8,15 +8,15 @@ class ParseAnnotation
 {
     public function __invoke(Doc $comment): array
     {
-        $t = \_str()->trim($comment->getText());
+        $t = \cus_trim($comment->getText());
 
         // убираем '/**'
-        $t = \_str()->replaceFirst('/**', '', $t);
-        $t = \_str()->trim($t);
+        $t = \replaceFirst('/**', '', $t);
+        $t = \cus_trim($t);
 
         // убираем '*/'
-        $t = \_str()->replaceLast('*/', '', $t);
-        $t = \_str()->trim($t);
+        $t = \replaceLast('*/', '', $t);
+        $t = \cus_trim($t);
 
         // ------------------------------------------------------------------
         // 
@@ -24,9 +24,9 @@ class ParseAnnotation
 
         $t = \explode(\PHP_EOL, $t);
         $t = \array_map(static function (string $item) {
-            $item = \_str()->trim($item);
-            $item = \_str()->ltrim($item, '*');
-            $item = \_str()->trim($item);
+            $item = \cus_trim($item);
+            $item = \cus_ltrim($item, '*');
+            $item = \cus_trim($item);
 
             return $item;
         }, $t);
@@ -46,11 +46,11 @@ class ParseAnnotation
 
         $res = [];
         foreach ($t as $item) {
-            $item = \_str()->squish($item);
+            $item = \squish($item);
             $item = \explode(' ', $item, 2);
 
             $res[] = [
-                'name'  => \_str()->replaceFirst('@', '', $item[0]),
+                'name'  => \replaceFirst('@', '', $item[0]),
                 'value' => $item[1] ?? '',
             ];
         }

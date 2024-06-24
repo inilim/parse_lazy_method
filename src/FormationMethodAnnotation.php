@@ -54,8 +54,8 @@ class FormationMethodAnnotation
 
             foreach ($ann_params as $param) {
                 if (\str_ends_with($param, $arg['var'])) {
-                    $param = \_str()->replaceLast($arg['var'], '', $param);
-                    $param = \_str()->trim($param);
+                    $param = \replaceLast($arg['var'], '', $param);
+                    $param = \cus_trim($param);
                     $args[$idx]['annotation_type'] = $param;
                 }
             }
